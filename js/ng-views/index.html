@@ -1,0 +1,14 @@
+<h2>These are all the wdinstagrams</h2>
+
+<div data-ng-repeat="wdinstagram in vm.wdinstagrams">
+  <p>{{wdinstagram.photo_url}}</p>
+  <p>{{wdinstagram.author}}</p>
+  <p>{{wdinstagram.body}}</p>
+</div>
+
+<form class="" action="index.html" method="post">
+  <label for="photo_url">Photo Url: </label>
+  <label for="author">Author Name: </label>
+  <label for="body">Description: </label>
+  <button type="button" name="button">Create</button>
+</form>
