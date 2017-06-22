@@ -13,21 +13,24 @@ angular
     "WdinstagramFactory",
     WdinstagramIndexControllerFunction
   ]);
+  .controller( "WdinstagramNewController", [
+    "WdinstagramFactory",
+    GrumbleNewControllerFunction
+  ]);
+  .controller("WdinstagramEditController", [
+   "WdinstagramFactory",
+   "$stateParams",
+   WdinstagramEditControllerFunction
+  ]);
    .controller("WdinstagramShowController", [
+    "WdinstagramFactory",
+    "$stateParams",
     WdinstagramShowControllerFunction
   ]);
   .factory( "WdinstagramFactory", [
       "$resource",
       WdinstagramFactoryFunction
   ]);
-
-  function WdinstagramFactoryFunction(){
-    return {
-      helloWorld: function(){
-        console.log( "Hello world!" );
-      }
-    }
-  }
 
  function RouterFunction($stateProvider){
    $stateProvider
@@ -37,6 +40,18 @@ angular
      controller: "WdinstagramIndexController",
      controllerAs: "vm"
    })
+   .state("wdinstagramNew", {
+    url: "/wdinstagrams/new",
+    templateUrl: "js/ng-views/new.html",
+    controller: "WdinstagramNewController",
+    controllerAs: "vm"
+  })
+  .state("wdinstagramEdit", {
+   url: "/wdinstagrams/:id/edit",
+   templateUrl: "js/ng-views/edit.html",
+   controller: "WdinstagramEditController",
+   controllerAs: "vm"
+  });
    .state("wdinstagramShow", {
      url: "/wdinstagrams/:id",
      templateUrl: "js/ng-views/show.html",
@@ -46,7 +61,9 @@ angular
  }
 
  function WdinstagramFactoryFunction( $resource ){
-    return $resource( "http://localhost:3000/wdinstagrams/:id" );
+    return $resource( "http://localhost:3000/wdinstagrams/:id", {}, {
+      update: { method: "PUT" }
+    });
   }
 
  function WdinstagramIndexControllerFunction(){
@@ -59,12 +76,32 @@ angular
   //    var data = {photo_url: this.photo_url, author: this.author, body: this.body};
   //    this.wdinstagrams.push(data);
   //  }
- };
+  this.wdinstagrams = WdinstagramFactory.$query();
+  this.wdinstagrams = WdinstagramFactory.$save();
 
- function WdinstagramShowControllerFunction(){
-   this.wdinstagram = wdinstagram.get({id: $stateParams.id});
+ }
+
+ function WdinstagramNewControllerFunction( WdinstagramFactory ){
+    this.wdinstagram = new WdinstagramFactory();
+    this.create = function(){
+      this.wdinstagram.$save()
+    }
+  }
+
+  function WdinstagramEditControllerFunction( WdinstagramFactory, $stateParams ){
+   this.wdinstagram = WdinstagramFactory.get({id: $stateParams.id});
    this.update = function(){
-     this.wdinstagram.replace();
+     this.wdinstagram.$update({id: $stateParams.id})
+   }
+   this.destroy = function(){
+     this.wdinstagram.$delete({id: $stateParams.id})
+   }
+ }
+
+ function WdinstagramShowControllerFunction(WdinstagramFactory, $stateParams){
+   this.wdinstagram = wdinstagram.get({id: $stateParams.id});
+  //  this.update = function(){
+  //    this.wdinstagram.replace();
    }
    this.destroy = function(){
       this.wdinstagram.pop({id: $stateParams.id});

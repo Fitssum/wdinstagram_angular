@@ -1,12 +1,14 @@
+<a data-ui-sref="wdinstagramNew">New Wdinstagram</a>
+
 <h2>These are all the wdinstagrams</h2>
 
-<div data-ng-repeat="wdinstagram in vm.wdinstagrams">
-  <p><img src="{{wdinstagram.photo_url}}"></p>
+<div data-ng-repeat="wdinstagram in vm.wdinstagrams | orderBy:'-created_at'">
+  <!-- <p><img src="{{wdinstagram.photo_url}}"></p>
   <p>{{wdinstagram.author}}</p>
-  <p>{{wdinstagram.body}}</p>
+  <p>{{wdinstagram.body}}</p> -->
 
   <p><a data-ui-sref="wdinstagramShow({id: wdinstagram.id})">{{wdinstagram.author}}</a></p>
-
+  <a data-ui-sref="wdinstagramEdit({id: wdinstagram.id})">Edit</a>
 </div>
 
 <form>
