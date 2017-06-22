@@ -1,1 +1,7 @@
-<p>This is the view</p>
+<form>
+  <input value="vm.wdinstagram.photo_url" data-ng-model="vm.wdinstagram.photo_url" /><br />
+  <input value="vm.wdinstagram.author" data-ng-model="vm.wdinstagram.author" /><br />
+  <textarea value="vm.wdinstagram.content" data-ng-model="vm.wdinstagram.body"></textarea><br />
+  <button data-ng-click="vm.update()">Update</button><br />
+  <button data-ng-click="vm.destroy()">Delete</button>
+</form>

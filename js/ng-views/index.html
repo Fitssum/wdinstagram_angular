@@ -1,14 +1,17 @@
 <h2>These are all the wdinstagrams</h2>
 
 <div data-ng-repeat="wdinstagram in vm.wdinstagrams">
-  <p>{{wdinstagram.photo_url}}</p>
+  <p><img src="{{wdinstagram.photo_url}}"></p>
   <p>{{wdinstagram.author}}</p>
   <p>{{wdinstagram.body}}</p>
+
+  <p><a data-ui-sref="wdinstagramShow({id: wdinstagram.id})">{{wdinstagram.author}}</a></p>
+
 </div>
 
-<form class="" action="index.html" method="post">
-  <label for="photo_url">Photo Url: </label>
-  <label for="author">Author Name: </label>
-  <label for="body">Description: </label>
-  <button type="button" name="button">Create</button>
+<form>
+  <input placeholder="photo url" data-ng-model="vm.photo_url" /><br />
+  <input placeholder="Author name" data-ng-model="vm.author" /> <br />
+  <textarea placeholder="Grumble content" data-ng-model="vm.body"></textarea><br />
+  <button type="button" data-ng-click="vm.create()">Create</button>
 </form>
